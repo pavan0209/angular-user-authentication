@@ -1,0 +1,49 @@
+@use '../../../styles/abstracts/colors' as AppColors;
+@use '../../../styles/abstracts/spacing' as AppSpacing;
+@use '../../../styles/abstracts/typography' as AppFonts;
+@use '../../../styles/abstracts/radius' as AppRadius;
+@use '../../../styles/abstracts/elevation' as AppElevations;
+
+.auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+//   padding: AppSpacing.$spacing-xl;
+  background: linear-gradient(135deg, AppColors.$primary-color, AppColors.$secondary-color);
+}
+
+.auth__container {
+  width: 100%;
+  max-width: 460px;
+}
+
+.auth__card {
+  width: 100%;
+  background: AppColors.$surface-color;
+  border-radius: AppRadius.$radius-md;
+  box-shadow: AppElevations.$shadow-md;
+  padding: AppSpacing.$spacing-xl;
+}
+
+.auth__header {
+  text-align: center;
+  margin-bottom: AppSpacing.$spacing-xl;
+}
+
+.auth__title {
+  margin: 0 0 AppSpacing.$spacing-sm;
+  color: AppColors.$text-primary;
+  font-size: AppFonts.$font-size-xl;
+  font-weight: 700;
+}
+
+.auth__subtitle {
+  margin: 0;
+  color: AppColors.$text-secondary;
+}
+
+.auth__content {
+  display: flex;
+  flex-direction: column;
+}
