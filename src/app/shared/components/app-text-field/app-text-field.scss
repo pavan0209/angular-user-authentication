@@ -1,0 +1,26 @@
+@use '../../../../styles/abstracts/colors' as AppColors;
+@use '../../../../styles/abstracts/transitions' as AppTransitions;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.app-text-field {
+  width: 100%;
+}
+
+.text-field__icon {
+  color: AppColors.$text-secondary;
+  transition: color AppTransitions.$transition-normal;
+}
+
+.text-field__action {
+  color: AppColors.$text-secondary;
+  transition: color AppTransitions.$transition-normal;
+}
+
+.text-field__action:hover,
+.text-field__icon:hover {
+  color: AppColors.$primary-color;
+}
