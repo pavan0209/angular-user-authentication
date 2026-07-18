@@ -1,0 +1,12 @@
+@use '../abstracts/colors' as *;
+@use '../abstracts/typography' as *;
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: $font-family;
+  background: $background-color;
+}
