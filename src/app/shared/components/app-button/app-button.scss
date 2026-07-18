@@ -1,7 +1,15 @@
+@use '../../../../styles/abstracts/radius' as AppRadius;
+@use '../../../../styles/abstracts/typography' as AppFonts;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
 button {
   width: 100%;
   height: 48px;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: AppRadius.$radius-md;
+  font-size: AppFonts.$font-size-md;
   font-weight: 600;
 }
