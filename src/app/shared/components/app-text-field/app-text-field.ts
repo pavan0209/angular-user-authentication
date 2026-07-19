@@ -1,31 +1,53 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, signal } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, computed, input, signal } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
 import { MatFormFieldAppearance, MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { ValidationUtils } from '../../utils/validation.utils';
 
 @Component({
   selector: 'app-text-field',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
   templateUrl: './app-text-field.html',
   styleUrl: './app-text-field.scss',
 })
 export class AppTextField {
-  label = input.required<string>();
-  placeholder = input<string>('');
-  type = input<'text' | 'password' | 'email' | 'number' | 'tel' | 'search'>('text');
-  leadingIcon = input<String>('');
-  appearance = input<MatFormFieldAppearance>('outline');
-  disabled = input(false);
-  value = signal('');
-  hidePassword = signal(true);
+  readonly label = input.required<string>();
+
+  readonly placeholder = input('');
+
+  readonly type = input<'text' | 'email' | 'password' | 'tel' | 'number' | 'search'>('text');
+
+  readonly leadingIcon = input('');
+
+  readonly appearance = input<MatFormFieldAppearance>('outline');
+
+  readonly control = input.required<FormControl<string>>();
+
+  readonly hidePassword = signal(true);
+
+  get showError(): boolean {
+    const control = this.control();
+    return control.invalid && (control.touched || control.dirty);
+  }
+
+  get errorMessage(): string {
+    return ValidationUtils.getError(this.control(), this.label());
+  }
+
   togglePassword(): void {
     this.hidePassword.update((value) => !value);
-  }
-  onInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.value.set(input.value);
   }
 }

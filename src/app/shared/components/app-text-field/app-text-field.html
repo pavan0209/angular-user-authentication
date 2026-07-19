@@ -1,4 +1,4 @@
-<mat-form-field class="app-text-field" [appearance]="appearance()">
+<mat-form-field class="app-text-field" [appearance]="appearance()" subscriptSizing="dynamic">
   @if (leadingIcon()) {
     <mat-icon matPrefix class="text-field__icon">
       {{ leadingIcon() }}
@@ -11,11 +11,9 @@
 
   <input
     matInput
+    [formControl]="control()"
     [type]="type() === 'password' ? (hidePassword() ? 'password' : 'text') : type()"
     [placeholder]="placeholder()"
-    [disabled]="disabled()"
-    [value]="value()"
-    (input)="onInput($event)"
   />
 
   @if (type() === 'password') {
@@ -30,5 +28,11 @@
         {{ hidePassword() ? 'visibility_off' : 'visibility' }}
       </mat-icon>
     </button>
+  }
+
+  @if (showError) {
+    <mat-error>
+      {{ errorMessage }}
+    </mat-error>
   }
 </mat-form-field>
