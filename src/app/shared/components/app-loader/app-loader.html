@@ -1,0 +1,10 @@
+<div class="loader">
+  <mat-progress-spinner mode="indeterminate" [diameter]="diameter()" [strokeWidth]="strokeWidth()">
+  </mat-progress-spinner>
+
+  @if (message()) {
+    <p class="loader__message">
+      {{ message() }}
+    </p>
+  }
+</div>
