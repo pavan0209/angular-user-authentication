@@ -1,11 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+
+import { AuthLayout } from '../../../layouts/auth-layout/auth-layout';
 
 import { AppButton } from '../../../shared/components/app-button/app-button';
 import { AppTextField } from '../../../shared/components/app-text-field/app-text-field';
-import { AuthLayout } from '../../../layouts/auth-layout/auth-layout';
+import { AuthService } from '../services/auth';
+import { LoadingService } from '../../../core/services/loading';
+import { NotificationService } from '../../../core/services/notification';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +20,14 @@ import { AuthLayout } from '../../../layouts/auth-layout/auth-layout';
 })
 export class Login {
   private readonly fb = inject(FormBuilder);
+
+  private readonly authService = inject(AuthService);
+
+  private readonly loadingService = inject(LoadingService);
+
+  private readonly notificationService = inject(NotificationService);
+
+  private readonly router = inject(Router);
 
   readonly loginForm = this.fb.nonNullable.group({
     email: this.fb.nonNullable.control('', [Validators.required, Validators.email]),
@@ -28,6 +40,20 @@ export class Login {
       return;
     }
 
-    console.log(this.loginForm.getRawValue());
+    this.loadingService.show();
+
+    this.authService.login(this.loginForm.getRawValue()).subscribe({
+      next: (response) => {
+        this.loadingService.hide();
+        this.notificationService.success(response.message);
+        console.log(response.data);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        this.loadingService.hide();
+        this.notificationService.error(error?.error?.message ?? 'Invalid email or password.');
+        console.error(error);
+      },
+    });
   }
 }
