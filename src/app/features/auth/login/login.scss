@@ -1,0 +1,49 @@
+@use '../../../../styles/abstracts/colors' as AppColors;
+@use '../../../../styles/abstracts/spacing' as AppSpacing;
+@use '../../../../styles/abstracts/typography' as AppFonts;
+@use '../../../../styles/abstracts/transitions' as AppTransitions;
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: AppSpacing.$spacing-lg;
+}
+
+.login-form__actions {
+  display: flex;
+  flex-direction: column;
+  gap: AppSpacing.$spacing-md;
+}
+
+.login-form__forgot-password {
+  align-self: flex-end;
+  color: AppColors.$primary-color;
+  text-decoration: none;
+  font-size: AppFonts.$font-size-sm;
+  transition: color AppTransitions.$transition-normal;
+}
+
+.login-form__forgot-password:hover {
+  color: AppColors.$primary-dark;
+}
+
+.login-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: AppSpacing.$spacing-xs;
+  margin-top: AppSpacing.$spacing-xl;
+  color: AppColors.$text-secondary;
+  font-size: AppFonts.$font-size-sm;
+}
+
+.login-footer a {
+  color: AppColors.$primary-color;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color AppTransitions.$transition-normal;
+}
+
+.login-footer a:hover {
+  color: AppColors.$primary-dark;
+}

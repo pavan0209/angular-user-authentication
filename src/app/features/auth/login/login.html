@@ -1,0 +1,33 @@
+<app-auth-layout title="Welcome Back 👋" subtitle="Sign in to continue">
+  <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <app-text-field
+      label="Email Address"
+      placeholder="Enter your email"
+      type="email"
+      leadingIcon="mail"
+      [control]="loginForm.controls.email"
+    >
+    </app-text-field>
+
+    <app-text-field
+      label="Password"
+      placeholder="Enter your password"
+      type="password"
+      leadingIcon="lock"
+      [control]="loginForm.controls.password"
+    >
+    </app-text-field>
+
+    <div class="login-form__actions">
+      <a class="login-form__forgot-password" href="javascript:void(0)"> Forgot Password? </a>
+
+      <app-button text="Login" type="submit"> </app-button>
+    </div>
+  </form>
+
+  <footer class="login-footer">
+    <span> Don't have an account? </span>
+
+    <a routerLink="/register"> Register </a>
+  </footer>
+</app-auth-layout>
