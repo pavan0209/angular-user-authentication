@@ -1,0 +1,64 @@
+@use '../../../../styles/abstracts/colors' as AppColors;
+@use '../../../../styles/abstracts/spacing' as AppSpacing;
+@use '../../../../styles/abstracts/typography' as AppFonts;
+@use '../../../../styles/abstracts/radius' as AppRadius;
+
+.confirm-dialog {
+  width: 100%;
+  max-width: 420px;
+  padding: AppSpacing.$spacing-xl;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.confirm-dialog__icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto AppSpacing.$spacing-lg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: rgba(244, 67, 54, 0.12);
+}
+
+.confirm-dialog__icon mat-icon {
+  color: AppColors.$error-color;
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
+
+.confirm-dialog__title {
+  margin: 0;
+  font-size: AppFonts.$font-size-xl;
+  font-weight: 700;
+}
+
+.confirm-dialog__message {
+  margin: AppSpacing.$spacing-md 0 AppSpacing.$spacing-xl;
+  color: AppColors.$text-secondary;
+  line-height: 1.6;
+}
+
+.confirm-dialog__actions {
+  display: flex;
+  justify-content: center;
+  gap: AppSpacing.$spacing-md;
+}
+
+.confirm-dialog__actions button {
+  flex: 1;
+  height: 46px;
+  border-radius: AppRadius.$radius-md;
+}
+
+@media (max-width: 600px) {
+  .confirm-dialog {
+    padding: AppSpacing.$spacing-lg;
+  }
+
+  .confirm-dialog__actions {
+    flex-direction: column;
+  }
+}
