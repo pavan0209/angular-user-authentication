@@ -1,0 +1,31 @@
+@use '../../../../styles/abstracts/colors' as AppColors;
+@use '../../../../styles/abstracts/spacing' as AppSpacing;
+@use '../../../../styles/abstracts/typography' as AppFonts;
+
+.snackbar {
+  display: flex;
+  align-items: center;
+  gap: AppSpacing.$spacing-md;
+  min-width: 300px;
+}
+
+.snackbar__icon {
+  font-size: 24px;
+}
+
+.snackbar__content {
+  display: flex;
+  flex-direction: column;
+  gap: AppSpacing.$spacing-xs;
+}
+
+.snackbar__title {
+  font-family: AppFonts.$font-family;
+  font-size: AppFonts.$font-size-md;
+  font-weight: 600;
+}
+
+.snackbar__message {
+  font-family: AppFonts.$font-family;
+  font-size: AppFonts.$font-size-sm;
+}
