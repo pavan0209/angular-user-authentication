@@ -1,0 +1,31 @@
+@use '../../../../styles/abstracts/colors' as AppColors;
+@use '../../../../styles/abstracts/spacing' as AppSpacing;
+@use '../../../../styles/abstracts/typography' as AppFonts;
+@use '../../../../styles/abstracts/transitions' as AppTransitions;
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: AppSpacing.$spacing-md;
+}
+
+.register-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: AppSpacing.$spacing-xs;
+  margin-top: AppSpacing.$spacing-xl;
+  color: AppColors.$text-secondary;
+  font-size: AppFonts.$font-size-sm;
+}
+
+.register-footer a {
+  color: AppColors.$primary-color;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color AppTransitions.$transition-normal;
+}
+
+.register-footer a:hover {
+  color: AppColors.$primary-dark;
+}

@@ -1,0 +1,54 @@
+<app-auth-layout title="Create Account 🚀" subtitle="Register to get started">
+  <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <app-text-field
+      label="First Name"
+      placeholder="Enter your first name"
+      leadingIcon="person"
+      [control]="registerForm.controls.firstName"
+    >
+    </app-text-field>
+
+    <app-text-field
+      label="Last Name"
+      placeholder="Enter your last name"
+      leadingIcon="person"
+      [control]="registerForm.controls.lastName"
+    >
+    </app-text-field>
+
+    <app-text-field
+      label="Email Address"
+      placeholder="Enter your email"
+      type="email"
+      leadingIcon="mail"
+      [control]="registerForm.controls.email"
+    >
+    </app-text-field>
+
+    <app-text-field
+      label="Mobile Number"
+      placeholder="Enter your mobile number"
+      type="tel"
+      leadingIcon="call"
+      [control]="registerForm.controls.phoneNumber"
+    >
+    </app-text-field>
+
+    <app-text-field
+      label="Password"
+      placeholder="Enter your password"
+      type="password"
+      leadingIcon="lock"
+      [control]="registerForm.controls.password"
+    >
+    </app-text-field>
+
+    <app-button text="Create Account" type="submit"> </app-button>
+  </form>
+
+  <footer class="register-footer">
+    <span>Already have an account?</span>
+
+    <a routerLink="/login"> Login </a>
+  </footer>
+</app-auth-layout>
