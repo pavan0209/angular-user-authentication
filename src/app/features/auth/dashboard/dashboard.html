@@ -1,1 +1,80 @@
-<p>dashboard works!</p>
+<div class="dashboard">
+  <div class="dashboard__container">
+    <section class="dashboard__card">
+      <header class="dashboard__header">
+        <div>
+          <h1 class="dashboard__title">My Profile</h1>
+
+          <p class="dashboard__subtitle">Manage your account information</p>
+        </div>
+
+        <button mat-stroked-button color="primary" type="button" (click)="logout()">Logout</button>
+      </header>
+
+      <div class="dashboard__profile">
+        <div class="dashboard__avatar">
+          {{ initials }}
+        </div>
+
+        <h2 class="dashboard__name">
+          {{ user.firstName }}
+          {{ user.lastName }}
+        </h2>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <h3 class="dashboard__section-title">Personal Information</h3>
+
+      <form class="dashboard__form" [formGroup]="profileForm">
+        <div class="dashboard__grid">
+          <app-text-field
+            label="First Name"
+            leadingIcon="person"
+            [control]="profileForm.controls.firstName"
+          >
+          </app-text-field>
+
+          <app-text-field
+            label="Last Name"
+            leadingIcon="person"
+            [control]="profileForm.controls.lastName"
+          >
+          </app-text-field>
+        </div>
+
+        <app-text-field
+          label="Email Address"
+          type="email"
+          leadingIcon="mail"
+          [control]="profileForm.controls.email"
+        >
+        </app-text-field>
+
+        <app-text-field
+          label="Phone Number"
+          type="tel"
+          leadingIcon="call"
+          [control]="profileForm.controls.phoneNumber"
+        >
+        </app-text-field>
+
+        <div class="dashboard__actions">
+          <div class="dashboard__action">
+            <app-button text="Update Profile" (click)="updateProfile()"> </app-button>
+          </div>
+
+          <button
+            mat-stroked-button
+            color="warn"
+            type="button"
+            class="dashboard__delete"
+            (click)="deleteProfile()"
+          >
+            Delete Account
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

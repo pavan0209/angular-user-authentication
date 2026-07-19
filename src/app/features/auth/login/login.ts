@@ -46,7 +46,7 @@ export class Login {
       next: (response) => {
         this.loadingService.hide();
         this.notificationService.success(response.message);
-        console.log(response.data);
+        localStorage.setItem('user', JSON.stringify(response.data));
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {
