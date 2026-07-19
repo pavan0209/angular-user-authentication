@@ -1,15 +1,78 @@
+@use '../../../../styles/abstracts/colors' as AppColors;
 @use '../../../../styles/abstracts/radius' as AppRadius;
 @use '../../../../styles/abstracts/typography' as AppFonts;
+@use '../../../../styles/abstracts/transitions' as AppTransitions;
 
 :host {
   display: block;
-  width: 100%;
 }
 
 button {
-  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: auto;
+  min-width: 140px;
   height: 48px;
+  padding: 0 24px;
   border-radius: AppRadius.$radius-md;
   font-size: AppFonts.$font-size-md;
   font-weight: 600;
+  transition: all AppTransitions.$transition-normal;
+}
+
+.button--full {
+  width: 100%;
+}
+
+.button--primary {
+  background-color: AppColors.$primary-color !important;
+  color: AppColors.$surface-color !important;
+}
+
+.button--primary:hover:not(:disabled) {
+  background-color: AppColors.$primary-dark !important;
+}
+
+.button--secondary {
+  background-color: transparent !important;
+  color: AppColors.$primary-color !important;
+  border: 1px solid AppColors.$primary-color !important;
+}
+
+.button--secondary:hover:not(:disabled) {
+  background-color: rgba(25, 118, 210, 0.08) !important;
+}
+
+.button--danger {
+  background-color: AppColors.$error-color !important;
+  color: AppColors.$surface-color !important;
+}
+
+.button--danger:hover:not(:disabled) {
+  background-color: #c62828 !important;
+}
+
+button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Spinner */
+
+mat-progress-spinner {
+  width: 20px !important;
+  height: 20px !important;
+  flex-shrink: 0;
+}
+
+mat-progress-spinner circle {
+  stroke: AppColors.$surface-color !important;
+}
+
+/* Material 3 spinner color */
+
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #{AppColors.$surface-color} !important;
 }

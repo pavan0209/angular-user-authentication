@@ -97,3 +97,12 @@ body {
     color: AppColors.$surface-color !important;
   }
 }
+
+/* Angular Material Dialog */
+
+.mat-mdc-dialog-container {
+  .mdc-dialog__surface {
+    overflow: hidden !important;
+    border-radius: 16px;
+  }
+}

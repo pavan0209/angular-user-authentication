@@ -1,3 +1,16 @@
-<button mat-flat-button color="primary" [type]="type()" [disabled]="disabled()">
-  {{ text() }}
+<button
+  mat-flat-button
+  [type]="type()"
+  [disabled]="disabled() || loading()"
+  (click)="onClick()"
+  [class.button--full]="fullWidth()"
+  [class.button--primary]="variant() === 'primary'"
+  [class.button--secondary]="variant() === 'secondary'"
+  [class.button--danger]="variant() === 'danger'"
+>
+  @if (loading()) {
+    Loading...
+  } @else {
+    {{ text() }}
+  }
 </button>
