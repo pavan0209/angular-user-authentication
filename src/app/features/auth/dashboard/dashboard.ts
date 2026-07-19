@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -9,6 +9,9 @@ import { AppButton } from '../../../shared/components/app-button/app-button';
 import { AppTextField } from '../../../shared/components/app-text-field/app-text-field';
 
 import { UserResponse } from '../../auth/models/user-response';
+import { AuthService } from '../services/auth';
+import { LoadingService } from '../../../core/services/loading';
+import { NotificationService } from '../../../core/services/notification';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,43 +20,80 @@ import { UserResponse } from '../../auth/models/user-response';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
-export class Dashboard {
+export class Dashboard implements OnInit {
   private readonly fb = inject(FormBuilder);
 
   private readonly router = inject(Router);
 
-  readonly user: UserResponse = JSON.parse(localStorage.getItem('user') ?? '{}');
+  private readonly authService = inject(AuthService);
+
+  private readonly loadingService = inject(LoadingService);
+
+  private readonly notificationService = inject(NotificationService);
+
+  user!: UserResponse;
 
   readonly profileForm = this.fb.nonNullable.group({
-    firstName: [this.user.firstName ?? '', Validators.required],
-
-    lastName: [this.user.lastName ?? '', Validators.required],
-
-    email: [this.user.email ?? '', [Validators.required, Validators.email]],
-
-    phoneNumber: [this.user.phoneNumber ?? '', Validators.required],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    phoneNumber: ['', Validators.required],
   });
 
+  ngOnInit(): void {
+    const user = localStorage.getItem('user');
+    if (!user) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.user = JSON.parse(user);
+
+    this.profileForm.patchValue({
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      email: this.user.email,
+      phoneNumber: this.user.phoneNumber,
+    });
+  }
+
   get initials(): string {
-    return (
-      (this.user.firstName?.charAt(0) ?? '') + (this.user.lastName?.charAt(0) ?? '')
-    ).toUpperCase();
+    return `${this.user.firstName.charAt(0)}${this.user.lastName.charAt(0)}`.toUpperCase();
   }
 
   logout(): void {
     localStorage.removeItem('user');
-
     this.router.navigate(['/login']);
   }
 
   updateProfile(): void {
     if (this.profileForm.invalid) {
       this.profileForm.markAllAsTouched();
-
       return;
     }
 
-    console.log(this.profileForm.getRawValue());
+    this.loadingService.show();
+
+    this.authService.updateUser(this.user.id, this.profileForm.getRawValue()).subscribe({
+      next: (response) => {
+        this.loadingService.hide();
+        this.user = response.data;
+        localStorage.setItem('user', JSON.stringify(response.data));
+        this.profileForm.patchValue({
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          email: response.data.email,
+          phoneNumber: response.data.phoneNumber,
+        });
+
+        this.profileForm.markAsPristine();
+        this.notificationService.success(response.message);
+      },
+      error: (error) => {
+        this.loadingService.hide();
+        this.notificationService.error(error.error?.message ?? 'Unable to update profile.');
+      },
+    });
   }
 
   deleteProfile(): void {
