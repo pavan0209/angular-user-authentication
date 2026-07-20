@@ -4,9 +4,11 @@ import { Router } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { AppButton } from '../../../shared/components/app-button/app-button';
 import { AppTextField } from '../../../shared/components/app-text-field/app-text-field';
+import { AppConfirmDialog } from '../../../shared/components/app-confirm-dialog/app-confirm-dialog';
 
 import { UserResponse } from '../../auth/models/user-response';
 import { AuthService } from '../services/auth';
@@ -16,7 +18,14 @@ import { NotificationService } from '../../../core/services/notification';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ReactiveFormsModule, MatButtonModule, MatDividerModule, AppButton, AppTextField],
+  imports: [
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatDialogModule,
+    AppButton,
+    AppTextField,
+  ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -24,6 +33,8 @@ export class Dashboard implements OnInit {
   private readonly fb = inject(FormBuilder);
 
   private readonly router = inject(Router);
+
+  private readonly dialog = inject(MatDialog);
 
   private readonly authService = inject(AuthService);
 
@@ -97,6 +108,39 @@ export class Dashboard implements OnInit {
   }
 
   deleteProfile(): void {
-    console.log('Delete Profile');
+    const dialogRef = this.dialog.open(AppConfirmDialog, {
+      width: '420px',
+      disableClose: true,
+      data: {
+        title: 'Delete Account',
+        message: 'Are you sure you want to delete your account? This action cannot be undone.',
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (!confirmed) {
+        return;
+      }
+      this.deleteUser();
+    }); 
+  }
+
+  private deleteUser(): void {
+    this.loadingService.show();
+    this.authService.deleteUser(this.user.id).subscribe({
+      next: (response) => {
+        this.loadingService.hide();
+        this.notificationService.success(response.message);
+        this.profileForm.reset();
+        localStorage.removeItem('user');
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        this.loadingService.hide();
+        this.notificationService.error(error.error?.message ?? 'Unable to delete account.');
+      },
+    });
   }
 }

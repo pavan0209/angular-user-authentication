@@ -3,5 +3,6 @@ export const ApiEndpoints = {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
     UPDATE_USER: (id: number) => `/auth/update/${id}`,
+    DELETE_USER: (id: number) => `/auth/delete/${id}`,
   },
 };

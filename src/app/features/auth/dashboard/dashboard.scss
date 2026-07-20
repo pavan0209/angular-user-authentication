@@ -6,7 +6,7 @@
 @use '../../../../styles/abstracts/transitions' as AppTransitions;
 
 .dashboard {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,6 +98,7 @@
 
 .dashboard__actions {
   display: flex;
+  justify-content: end;
   gap: AppSpacing.$spacing-md;
   margin-top: AppSpacing.$spacing-md;
 }

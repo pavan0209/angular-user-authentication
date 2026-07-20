@@ -8,7 +8,8 @@
           <p class="dashboard__subtitle">Manage your account information</p>
         </div>
 
-        <button mat-stroked-button color="primary" type="button" (click)="logout()">Logout</button>
+        <app-button text="Logout" variant="secondary" [fullWidth]="false" (buttonClick)="logout()">
+        </app-button>
       </header>
 
       <div class="dashboard__profile">
@@ -60,19 +61,12 @@
         </app-text-field>
 
         <div class="dashboard__actions">
-          <div class="dashboard__action">
+          <!-- <div class="dashboard__action"> -->
             <app-button text="Update Profile" (click)="updateProfile()"> </app-button>
-          </div>
+          <!-- </div> -->
 
-          <button
-            mat-stroked-button
-            color="warn"
-            type="button"
-            class="dashboard__delete"
-            (click)="deleteProfile()"
-          >
-            Delete Account
-          </button>
+          <app-button text="Delete Account" variant="danger" (buttonClick)="deleteProfile()">
+          </app-button>
         </div>
       </form>
     </section>

@@ -10,6 +10,7 @@ import { AppTextField } from '../../../shared/components/app-text-field/app-text
 import { AuthService } from '../services/auth';
 import { LoadingService } from '../../../core/services/loading';
 import { NotificationService } from '../../../core/services/notification';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class Login {
 
   private readonly authService = inject(AuthService);
 
-  private readonly loadingService = inject(LoadingService);
+  protected readonly loadingService = inject(LoadingService);
 
   private readonly notificationService = inject(NotificationService);
 
@@ -42,18 +43,21 @@ export class Login {
 
     this.loadingService.show();
 
-    this.authService.login(this.loginForm.getRawValue()).subscribe({
-      next: (response) => {
-        this.loadingService.hide();
-        this.notificationService.success(response.message);
-        localStorage.setItem('user', JSON.stringify(response.data));
-        this.router.navigate(['/dashboard']);
-      },
-      error: (error) => {
-        this.loadingService.hide();
-        this.notificationService.error(error?.error?.message ?? 'Invalid email or password.');
-        console.error(error);
-      },
-    });
+    this.authService
+      .login(this.loginForm.getRawValue())
+      .pipe(delay(2000))
+      .subscribe({
+        next: (response) => {
+          this.loadingService.hide();
+          this.notificationService.success(response.message);
+          localStorage.setItem('user', JSON.stringify(response.data));
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          this.loadingService.hide();
+          this.notificationService.error(error?.error?.message ?? 'Invalid email or password.');
+          console.error(error);
+        },
+      });
   }
 }

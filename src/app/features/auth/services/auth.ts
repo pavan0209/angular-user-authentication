@@ -32,6 +32,10 @@ export class AuthService {
     );
   }
 
+  deleteUser(id: number) {
+    return this.apiService.delete<ApiResponse<void>>(ApiEndpoints.AUTH.DELETE_USER(id));
+  }
+
   logout(): void {
     localStorage.removeItem('accessToken');
 

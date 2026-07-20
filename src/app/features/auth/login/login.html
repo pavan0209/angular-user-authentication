@@ -21,7 +21,7 @@
     <div class="login-form__actions">
       <a class="login-form__forgot-password" href="javascript:void(0)"> Forgot Password? </a>
 
-      <app-button text="Login" type="submit"> </app-button>
+      <app-button text="Login" type="submit" [loading]="loadingService.isLoading()"> </app-button>
     </div>
   </form>
 
