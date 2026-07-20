@@ -12,12 +12,20 @@
   </p>
 
   <div class="confirm-dialog__actions">
-    <button mat-stroked-button type="button" (click)="cancel()">
-      {{ data.cancelButtonText }}
-    </button>
+    <app-button
+      [text]="data.cancelButtonText"
+      variant="secondary"
+      [fullWidth]="false"
+      (buttonClick)="cancel()"
+    >
+    </app-button>
 
-    <button mat-flat-button color="warn" type="button" (click)="confirm()">
-      {{ data.confirmButtonText }}
-    </button>
+    <app-button
+      [text]="data.confirmButtonText"
+      variant="danger"
+      [fullWidth]="false"
+      (buttonClick)="confirm()"
+    >
+    </app-button>
   </div>
 </div>
